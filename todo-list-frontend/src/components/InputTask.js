@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 function InputTask() {
+  const [inputContent, setInputContent] = useState('');
+
+  const handleTask = () => {
+    console.log(inputContent);
+    setInputContent('');
+  };
+
   return (
-    <InputGroup className="mb-3">
+    <InputGroup
+      className="mb-3"
+    >
       <FormControl
         placeholder="Type your new task here!"
         aria-label="Recipient's username"
         aria-describedby="basic-addon2"
+        value={ inputContent }
+        onChange={ (e) => setInputContent(e.target.value) }
       />
-      <Button variant="outline-secondary" id="button-addon2">
+      <Button
+        variant="primary"
+        id="button-addon2"
+        onClick={ handleTask }
+      >
         New Task
-      </Button>
-      <Button variant="outline-secondary" id="button-addon2">
-        Remove Task
-      </Button>
-      <Button variant="outline-secondary" id="button-addon2">
-        Edit Task
-      </Button>
-      <Button variant="outline-secondary" id="button-addon2">
-        Change Status
       </Button>
     </InputGroup>
   );
