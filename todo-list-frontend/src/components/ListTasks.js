@@ -5,7 +5,7 @@ import { useId } from '../providers/listProvider';
 function ListTasks() {
   const [tasks, setTasks] = useState([]);
   const [background, setBackground] = useState({ id: '', color: '' });
-  const [status, setStatus] = useState({ id: '', name: '' });
+  const [status, setStatus] = useState({ id: '', status: '' });
 
   const { id, setId } = useId();
 
@@ -27,9 +27,19 @@ function ListTasks() {
     const validNames = ['Pending', 'In Progress', 'Done'];
 
     if (validNames.includes(textContent)) {
-      setStatus({ listId, name: textContent });
+      setStatus({ id: listId, status: textContent });
     }
   };
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: status.status }),
+    };
+
+    fetch(`http://localhost:3001/${status.id}`, requestOptions);
+  }, [status]);
 
   return (
     <Table striped bordered hover>
