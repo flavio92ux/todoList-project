@@ -16,8 +16,15 @@ const deleteTask = async (req, res) => {
   res.status(410).json({ message: 'Task deleted' });
 };
 
+const updateTask = async (req, res) => {
+  const { task, status } = req.body;
+  await todoListService.updateTask(req.params.id, task, status);
+  res.status(200).json({ message: 'Task updated' });
+};
+
 module.exports = {
   getTasks,
   createTask,
   deleteTask,
+  updateTask,
 };

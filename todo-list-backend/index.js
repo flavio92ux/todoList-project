@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.get('/', todoListController.getTasks);
 app.post('/', todoListController.createTask);
 app.delete('/:id', checkParams, rescue(todoListController.deleteTask));
+app.put('/:id', checkParams, rescue(todoListController.updateTask));
 
 app.use((error, _req, res, _next) => {
   console.log(error);

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Dropdown } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ListTasks() {
   const [tasks, setTasks] = useState([]);
   const [background, setBackground] = useState({ id: '', color: '' });
+  const [status, setStatus] = useState({ id: '', name: '' });
 
   const { id, setId } = useId();
 
@@ -22,6 +23,14 @@ function ListTasks() {
     setId(listId);
   };
 
+  const handleDropdown = ({ textContent }, listId) => {
+    const validNames = ['Pending', 'In Progress', 'Done'];
+
+    if (validNames.includes(textContent)) {
+      setStatus({ listId, name: textContent });
+    }
+  };
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -29,6 +38,7 @@ function ListTasks() {
           <th>#</th>
           <th>Task</th>
           <th>Status</th>
+          <th>Change</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +54,20 @@ function ListTasks() {
             <td>{index + 1}</td>
             <td>{task.task}</td>
             <td>{task.status}</td>
+            <td>
+              <Dropdown onClick={ (e) => handleDropdown(e.target, task.id) }>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Change Status
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Pending</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">In Progress</Dropdown.Item>
+                  <Dropdown.Item href="#/action-3">Done</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
+            {/* <td>{task.status}</td> */}
           </tr>
         ))}
       </tbody>

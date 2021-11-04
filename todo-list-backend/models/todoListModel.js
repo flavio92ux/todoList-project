@@ -13,12 +13,8 @@ const createTask = (task, status = 'pendente') => connection().then(
   (db) => db.collection('tasks').insertOne({ task, status }),
 );
 
-const updateTask = (id, task) => connection().then(
-  (db) => db.collection('tasks').updateOne({ _id: ObjectId(id) }, { $set: { task } }),
-);
-
-const updateStatus = (id, status) => connection().then(
-  (db) => db.collection('tasks').updateOne({ _id: ObjectId(id) }, { $set: { status } }),
+const updateTask = (id, task, status) => connection().then(
+  (db) => db.collection('tasks').updateOne({ _id: ObjectId(id) }, { $set: { task, status } }),
 );
 
 const deleteTask = (id) => connection().then(
@@ -30,6 +26,5 @@ module.exports = {
   getTaskById,
   createTask,
   updateTask,
-  updateStatus,
   deleteTask,
 };

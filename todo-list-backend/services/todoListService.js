@@ -28,12 +28,30 @@ const deleteTask = async (id) => {
   };
 
   if (!task) throw errorMessage;
-
   await todoListModel.deleteTask(id);
+};
+
+const updateTask = async (id, task, status) => {
+  const currentTask = await todoListModel.getTaskById(id);
+
+  const { task: currentTaskName, status: currentTaskStatus } = currentTask;
+
+  const newTask = task || currentTaskName;
+  const newStatus = status || currentTaskStatus;
+
+  await todoListModel.updateTask(id, newTask, newStatus);
+
+  const errorMessage = {
+    status: 404,
+    message: 'Task not found',
+  };
+
+  if (!currentTask) throw errorMessage;
 };
 
 module.exports = {
   getTasks,
   createTask,
   deleteTask,
+  updateTask,
 };
