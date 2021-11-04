@@ -8,12 +8,14 @@ function InputTask() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ task: 'ola', status: 'mundo' }),
+      body: JSON.stringify({ task: inputContent }),
     };
 
     fetch('http://localhost:3001/', requestOptions)
       .then((response) => response.json());
-    // Codigo obtido de https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
+
+    setInputContent('');
+    document.getElementById('input').focus();
   };
 
   return (
@@ -24,6 +26,7 @@ function InputTask() {
         placeholder="Type your new task here!"
         aria-label="Recipient's username"
         aria-describedby="basic-addon2"
+        id="input"
         value={ inputContent }
         onChange={ (e) => setInputContent(e.target.value) }
       />
