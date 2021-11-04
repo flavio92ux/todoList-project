@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ListTasks() {
@@ -23,20 +23,32 @@ function ListTasks() {
   };
 
   return (
-    <ListGroup>
-      {tasks.map((task) => (
-        <ListGroup.Item
-          key={ task.id }
-          style={ background.id === task.id
-            ? { background: background.color }
-            : null }
-          id={ task.id }
-          onClick={ () => handleClick(task.id) }
-        >
-          {`${task.task} - ${task.status}`}
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Task</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tasks.map((task, index) => (
+          <tr
+            key={ task.id }
+            style={ background.id === task.id
+              ? { background: background.color }
+              : null }
+            id={ task.id }
+            onClick={ () => handleClick(task.id) }
+          >
+            <td>{index + 1}</td>
+            <td>{task.task}</td>
+            <td>{task.status}</td>
+            {/* {`${task.task} - ${task.status}`} */}
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 }
 
