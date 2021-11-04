@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', todoListController.getTasks);
 app.post('/', todoListController.createTask);
+app.delete('/:id', todoListController.deleteTask);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

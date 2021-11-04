@@ -19,7 +19,12 @@ const createTask = async (task, status) => {
   await todoListModel.createTask(task, status);
 };
 
+const deleteTask = async (id) => {
+  await todoListModel.deleteTask(id);
+};
+
 module.exports = {
   getTasks,
   createTask,
+  deleteTask,
 };

@@ -12,7 +12,7 @@ function ListTasks() {
     fetch('http://localhost:3001/')
       .then((response) => response.json())
       .then((data) => setTasks(data));
-  }, [id]);
+  }, [id, tasks]);
 
   useEffect(() => {
     setBackground({ id, color: 'grey' });
@@ -24,7 +24,6 @@ function ListTasks() {
 
   return (
     <ListGroup>
-      {console.log('ola')}
       {tasks.map((task) => (
         <ListGroup.Item
           key={ task.id }
@@ -34,7 +33,7 @@ function ListTasks() {
           id={ task.id }
           onClick={ () => handleClick(task.id) }
         >
-          {task.task}
+          {`${task.task} - ${task.status}`}
         </ListGroup.Item>
       ))}
     </ListGroup>
