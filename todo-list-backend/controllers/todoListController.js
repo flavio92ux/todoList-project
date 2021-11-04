@@ -12,8 +12,7 @@ const createTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  const { id } = req.params;
-  await todoListService.deleteTask(id);
+  await todoListService.deleteTask(req.params.id);
   res.status(410).json({ message: 'Task deleted' });
 };
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export const idContext = React.createContext('');
 
 export const IdProvider = ({ children }) => {
-  const [id, setId] = useState('ola');
+  const [id, setId] = useState();
 
   return (
     <idContext.Provider value={ { id, setId } }>

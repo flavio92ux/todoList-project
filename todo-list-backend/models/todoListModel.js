@@ -5,6 +5,10 @@ const getTasks = () => connection().then(
   (db) => db.collection('tasks').find({}).toArray(),
 );
 
+const getTaskById = (id) => connection().then(
+  (db) => db.collection('tasks').findOne({ _id: ObjectId(id) }),
+);
+
 const createTask = (task, status = 'pendente') => connection().then(
   (db) => db.collection('tasks').insertOne({ task, status }),
 );
@@ -23,6 +27,7 @@ const deleteTask = (id) => connection().then(
 
 module.exports = {
   getTasks,
+  getTaskById,
   createTask,
   updateTask,
   updateStatus,

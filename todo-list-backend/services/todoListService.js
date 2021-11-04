@@ -20,6 +20,15 @@ const createTask = async (task, status) => {
 };
 
 const deleteTask = async (id) => {
+  const task = await todoListModel.getTaskById(id);
+
+  const errorMessage = {
+    status: 404,
+    message: 'Task not found',
+  };
+
+  if (!task) throw errorMessage;
+
   await todoListModel.deleteTask(id);
 };
 

@@ -44,7 +44,6 @@ function ListTasks() {
             <td>{index + 1}</td>
             <td>{task.task}</td>
             <td>{task.status}</td>
-            {/* {`${task.task} - ${task.status}`} */}
           </tr>
         ))}
       </tbody>
