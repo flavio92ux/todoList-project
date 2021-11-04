@@ -5,7 +5,7 @@ const getTasks = () => connection().then(
   (db) => db.collection('tasks').find({}).toArray(),
 );
 
-const createTask = (task, status) => connection().then(
+const createTask = (task, status = 'pendente') => connection().then(
   (db) => db.collection('tasks').insertOne({ task, status }),
 );
 
