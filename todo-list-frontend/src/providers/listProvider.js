@@ -5,9 +5,10 @@ export const idContext = React.createContext('');
 
 export const IdProvider = ({ children }) => {
   const [id, setId] = useState();
+  const [disable, setDisable] = useState(true);
 
   return (
-    <idContext.Provider value={ { id, setId } }>
+    <idContext.Provider value={ { id, setId, disable, setDisable } }>
       { children }
     </idContext.Provider>
   );

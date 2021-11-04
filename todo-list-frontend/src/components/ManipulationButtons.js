@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ManipulationButtons() {
-  const { id, setId } = useId();
+  const { id, setId, disable } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -23,11 +23,12 @@ function ManipulationButtons() {
       >
         x
       </Button>
-      <Button variant="secondary" id="button-addon2">
+      <Button
+        variant="secondary"
+        id="button-addon2"
+        disabled={ disable }
+      >
         Edit Task
-      </Button>
-      <Button variant="info" id="button-addon2">
-        Change Status
       </Button>
     </>
   );

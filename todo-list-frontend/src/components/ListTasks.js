@@ -7,7 +7,7 @@ function ListTasks() {
   const [background, setBackground] = useState({ id: '', color: '' });
   const [status, setStatus] = useState({ id: '', status: '' });
 
-  const { id, setId } = useId();
+  const { id, setId, setDisable } = useId();
 
   useEffect(() => {
     fetch('http://localhost:3001/')
@@ -21,6 +21,7 @@ function ListTasks() {
 
   const handleClick = (listId) => {
     setId(listId);
+    setDisable(false);
   };
 
   const handleDropdown = ({ textContent }, listId) => {
