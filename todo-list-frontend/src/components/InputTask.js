@@ -5,8 +5,15 @@ function InputTask() {
   const [inputContent, setInputContent] = useState('');
 
   const handleTask = () => {
-    console.log(inputContent);
-    setInputContent('');
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: 'ola', status: 'mundo' }),
+    };
+
+    fetch('http://localhost:3001/', requestOptions)
+      .then((response) => response.json());
+    // Codigo obtido de https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
   };
 
   return (
