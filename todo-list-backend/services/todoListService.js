@@ -11,7 +11,7 @@ const replaceId = (tasks) => {
 };
 
 const checkSortOrder = (sortOrder) => {
-  const validValues = ['asc', 'desc', 0, 1];
+  const validValues = ['asc', 'desc', -1, 1];
 
   if (!validValues.includes(sortOrder)) {
     const errorMessage = {

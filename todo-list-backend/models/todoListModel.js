@@ -14,7 +14,7 @@ const getTaskById = (id) => connection().then(
 );
 
 const createTask = (task, status = 'Pending') => connection().then(
-  (db) => db.collection('tasks').insertOne({ task, status }),
+  (db) => db.collection('tasks').insertOne({ task, status, createdAt: new Date() }),
 );
 
 const updateTask = (id, task, status) => connection().then(
