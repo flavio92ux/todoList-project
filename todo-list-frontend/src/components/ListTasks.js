@@ -28,7 +28,7 @@ function ListTasks() {
 
   useEffect(() => {
     setChanged(!changed);
-  }, [status]);
+  }, [status.status]);
 
   const handleDropdown = ({ textContent }, listId) => {
     const validNames = ['Pending', 'In Progress', 'Done'];

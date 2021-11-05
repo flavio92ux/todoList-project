@@ -6,7 +6,7 @@ function ManipulationButtons() {
   const {
     id,
     setId,
-    disable, editMode, setEditMode, tasks, setTasks, changed, setChanged } = useId();
+    disable, editMode, setEditMode, setTasks, changed, setChanged } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -42,11 +42,11 @@ function ManipulationButtons() {
   const generateQuery = (textContent) => {
     switch (textContent) {
     case 'Date':
-      return 'http://localhost:3001/sort?sortBy=createdAt&sortOrder=asc';
+      return 'createdAt';
     case 'Task':
-      return 'http://localhost:3001/sort?sortBy=task&sortOrder=asc';
+      return 'task';
     default:
-      return 'http://localhost:3001/sort?sortBy=status&sortOrder=asc';
+      return 'status';
     }
   };
 
@@ -56,7 +56,7 @@ function ManipulationButtons() {
 
     const query = generateQuery(textContent);
 
-    fetch(query)
+    fetch(`http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`)
       .then((response) => response.json())
       .then((data) => setTasks(data));
   };
