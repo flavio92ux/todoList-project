@@ -33,11 +33,32 @@ function ManipulationButtons() {
     saveDb();
   };
 
-  const handleSort = ({ textContent }) => {
-    if (textContent === 'Sort by date') {
-      fetch('http://localhost:3001/sort/date')
-        .then((response) => response.json());
+  const generateBody = (textContent) => {
+    switch (textContent) {
+    case 'Date':
+      return { sortBy: 'createdAt', sortOrder: 'asc' };
+    case 'Task':
+      return { sortBy: 'task', sortOrder: 'asc' };
+    default:
+      return { sortBy: 'status', sortOrder: 'asc' };
     }
+  };
+
+  const handleSort = ({ textContent }) => {
+    const validValues = ['Date', 'Task', 'Status'];
+    if (!validValues.includes(textContent)) return;
+
+    const body = generateBody(textContent);
+
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+    };
+
+    fetch('http://localhost:3001/sort', requestOptions)
+      .then((response) => response.json())
+      .then((data) => setId(data[0].id));
   };
 
   return (
@@ -60,8 +81,12 @@ function ManipulationButtons() {
       { editMode.edit
         && <Button onClick={ handleDone }>Ok</Button> }
       <DropdownButton id="dropdown-item-button" className="drop-button" title="Sort By">
-        {['Date', 'Priority', 'Status'].map((item) => (
-          <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
+        {['Date', 'Task', 'Status'].map((item) => (
+          <Dropdown.Item
+            key={ item }
+          >
+            { item }
+          </Dropdown.Item>
         ))}
       </DropdownButton>
     </div>
