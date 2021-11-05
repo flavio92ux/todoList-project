@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { useId } from '../providers/listProvider';
 
 function InputTask() {
   const [inputContent, setInputContent] = useState('');
+  const { changed, setChanged } = useId();
 
   const handleTask = () => {
-    console.log(inputContent);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: inputContent }),
+    };
+
+    fetch('http://localhost:3001/', requestOptions)
+      .then((response) => response.json());
+
     setInputContent('');
+    setChanged(!changed);
+    document.getElementById('input').focus();
   };
 
   return (
@@ -17,6 +29,7 @@ function InputTask() {
         placeholder="Type your new task here!"
         aria-label="Recipient's username"
         aria-describedby="basic-addon2"
+        id="input"
         value={ inputContent }
         onChange={ (e) => setInputContent(e.target.value) }
       />
