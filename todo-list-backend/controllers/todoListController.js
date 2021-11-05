@@ -6,7 +6,8 @@ const getTasks = async (_req, res) => {
 };
 
 const sortTasks = async (req, res) => {
-  const { sortBy, sortOrder } = req.body;
+  const { sortBy, sortOrder } = req.query;
+  console.log(sortBy, sortOrder);
   const tasks = await todoListService.sortTasks(sortBy, sortOrder);
   res.status(200).json(tasks);
 };

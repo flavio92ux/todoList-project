@@ -3,7 +3,7 @@ import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ManipulationButtons() {
-  const { id, setId, disable, editMode, setEditMode } = useId();
+  const { id, setId, disable, editMode, setEditMode, setTasks } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -33,14 +33,14 @@ function ManipulationButtons() {
     saveDb();
   };
 
-  const generateBody = (textContent) => {
+  const generateQuery = (textContent) => {
     switch (textContent) {
     case 'Date':
-      return { sortBy: 'createdAt', sortOrder: 'asc' };
+      return 'http://localhost:3001/sort?sortBy=createdAt&sortOrder=asc';
     case 'Task':
-      return { sortBy: 'task', sortOrder: 'asc' };
+      return 'http://localhost:3001/sort?sortBy=task&sortOrder=asc';
     default:
-      return { sortBy: 'status', sortOrder: 'asc' };
+      return 'http://localhost:3001/sort?sortBy=status&sortOrder=asc';
     }
   };
 
@@ -48,17 +48,13 @@ function ManipulationButtons() {
     const validValues = ['Date', 'Task', 'Status'];
     if (!validValues.includes(textContent)) return;
 
-    const body = generateBody(textContent);
+    const query = generateQuery(textContent);
 
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-    };
+    console.log(query);
 
-    fetch('http://localhost:3001/sort', requestOptions)
+    fetch(query)
       .then((response) => response.json())
-      .then((data) => setId(data[0].id));
+      .then((data) => setTasks(data));
   };
 
   return (
@@ -80,13 +76,14 @@ function ManipulationButtons() {
       </Button>
       { editMode.edit
         && <Button onClick={ handleDone }>Ok</Button> }
-      <DropdownButton id="dropdown-item-button" className="drop-button" title="Sort By">
+      <DropdownButton
+        id="dropdown-item-button"
+        className="drop-button"
+        title="Sort By"
+        onClick={ (e) => handleSort(e.target) }
+      >
         {['Date', 'Task', 'Status'].map((item) => (
-          <Dropdown.Item
-            key={ item }
-          >
-            { item }
-          </Dropdown.Item>
+          <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
         ))}
       </DropdownButton>
     </div>

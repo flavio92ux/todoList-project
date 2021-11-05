@@ -3,17 +3,16 @@ import { Table, Dropdown } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ListTasks() {
-  const [tasks, setTasks] = useState([]);
   const [background, setBackground] = useState({ id: '', color: '' });
   const [status, setStatus] = useState({ id: '', status: '' });
 
-  const { id, editMode, setId, setDisable, setEditMode } = useId();
+  const { id, editMode, changed, tasks, setId, setDisable, setEditMode, setTasks } = useId();
 
   useEffect(() => {
     fetch('http://localhost:3001/')
       .then((response) => response.json())
       .then((data) => setTasks(data));
-  }, [id, tasks]);
+  }, [id, changed]);
 
   useEffect(() => {
     setBackground({ id, color: 'grey' });
