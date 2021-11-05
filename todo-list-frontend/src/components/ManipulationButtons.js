@@ -33,6 +33,13 @@ function ManipulationButtons() {
     saveDb();
   };
 
+  const handleSort = ({ textContent }) => {
+    if (textContent === 'Sort by date') {
+      fetch('http://localhost:3001/sort/date')
+        .then((response) => response.json());
+    }
+  };
+
   return (
     <div>
       <Button
@@ -53,7 +60,7 @@ function ManipulationButtons() {
       { editMode.edit
         && <Button onClick={ handleDone }>Ok</Button> }
       <DropdownButton id="dropdown-item-button" className="drop-button" title="Sort By">
-        {['Date', 'Task', 'Status'].map((item) => (
+        {['Date', 'Priority', 'Status'].map((item) => (
           <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
         ))}
       </DropdownButton>
