@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ManipulationButtons() {
-  const { id, setId, disable } = useId();
+  const { id, setId, disable, editMode, setEditMode } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -12,6 +12,25 @@ function ManipulationButtons() {
 
     fetch(`http://localhost:3001/${id}`, requestOptions)
       .then(() => setId(null));
+  };
+
+  const handleEdit = () => {
+    setEditMode({ id, edit: true });
+  };
+
+  const saveDb = () => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: editMode.input }),
+    };
+
+    fetch(`http://localhost:3001/${editMode.id}`, requestOptions);
+  };
+
+  const handleDone = () => {
+    setEditMode({ ...editMode, edit: false });
+    saveDb();
   };
 
   return (
@@ -27,9 +46,12 @@ function ManipulationButtons() {
         variant="secondary"
         id="button-addon2"
         disabled={ disable }
+        onClick={ handleEdit }
       >
         Edit Task
       </Button>
+      { editMode.edit
+        && <Button onClick={ handleDone }>Ok</Button> }
     </>
   );
 }

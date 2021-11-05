@@ -7,7 +7,7 @@ function ListTasks() {
   const [background, setBackground] = useState({ id: '', color: '' });
   const [status, setStatus] = useState({ id: '', status: '' });
 
-  const { id, setId, setDisable } = useId();
+  const { id, editMode, setId, setDisable, setEditMode } = useId();
 
   useEffect(() => {
     fetch('http://localhost:3001/')
@@ -30,6 +30,10 @@ function ListTasks() {
     if (validNames.includes(textContent)) {
       setStatus({ id: listId, status: textContent });
     }
+  };
+
+  const handleInput = ({ value }) => {
+    setEditMode({ ...editMode, input: value });
   };
 
   useEffect(() => {
@@ -63,7 +67,18 @@ function ListTasks() {
             onClick={ () => handleClick(task.id) }
           >
             <td>{index + 1}</td>
-            <td>{task.task}</td>
+            <td>
+              {editMode.edit && task.id === editMode.id
+                ? (
+                  <input
+                    type="text"
+                    defaultValue={ task.task }
+                    value={ editMode.input }
+                    onChange={ (e) => handleInput(e.target) }
+                  />
+                )
+                : task.task}
+            </td>
             <td>{task.status}</td>
             <td>
               <Dropdown onClick={ (e) => handleDropdown(e.target, task.id) }>
@@ -78,7 +93,6 @@ function ListTasks() {
                 </Dropdown.Menu>
               </Dropdown>
             </td>
-            {/* <td>{task.status}</td> */}
           </tr>
         ))}
       </tbody>
