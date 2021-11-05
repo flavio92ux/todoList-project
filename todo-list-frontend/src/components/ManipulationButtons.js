@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ManipulationButtons() {
@@ -34,7 +34,7 @@ function ManipulationButtons() {
   };
 
   return (
-    <>
+    <div>
       <Button
         variant="danger"
         id="button-addon2"
@@ -52,7 +52,12 @@ function ManipulationButtons() {
       </Button>
       { editMode.edit
         && <Button onClick={ handleDone }>Ok</Button> }
-    </>
+      <DropdownButton id="dropdown-item-button" className="drop-button" title="Sort By">
+        {['Date', 'Task', 'Status'].map((item) => (
+          <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
+        ))}
+      </DropdownButton>
+    </div>
   );
 }
 
