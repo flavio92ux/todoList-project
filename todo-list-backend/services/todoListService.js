@@ -4,13 +4,33 @@ const replaceId = (tasks) => {
   const newTasks = tasks.map((task) => {
     const newTask = { ...task };
     newTask.id = task._id;
+    delete newTask._id;
     return newTask;
   });
   return newTasks;
 };
 
+const checkSortOrder = (sortOrder) => {
+  const validValues = ['asc', 'desc', 0, 1];
+
+  if (!validValues.includes(sortOrder)) {
+    const errorMessage = {
+      status: 400,
+      message: 'Sort order must be "asc" or "desc"',
+    };
+    throw errorMessage;
+  }
+};
+
 const getTasks = async () => {
   const tasks = await todoListModel.getTasks();
+  const newTasks = replaceId(tasks);
+  return newTasks;
+};
+
+const sortTasks = async (sortBy, sortOrder) => {
+  checkSortOrder(sortOrder);
+  const tasks = await todoListModel.sortTasks(sortBy, sortOrder);
   const newTasks = replaceId(tasks);
   return newTasks;
 };
@@ -51,6 +71,7 @@ const updateTask = async (id, task, status) => {
 
 module.exports = {
   getTasks,
+  sortTasks,
   createTask,
   deleteTask,
   updateTask,

@@ -5,6 +5,10 @@ const getTasks = () => connection().then(
   (db) => db.collection('tasks').find({}).toArray(),
 );
 
+const sortTasks = (sortBy, sortOrder) => connection().then(
+  (db) => db.collection('tasks').find({}).sort({ [sortBy]: sortOrder }).toArray(),
+);
+
 const getTaskById = (id) => connection().then(
   (db) => db.collection('tasks').findOne({ _id: ObjectId(id) }),
 );
@@ -23,6 +27,7 @@ const deleteTask = (id) => connection().then(
 
 module.exports = {
   getTasks,
+  sortTasks,
   getTaskById,
   createTask,
   updateTask,

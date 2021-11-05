@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
 app.get('/', todoListController.getTasks);
+app.get('/sort', rescue(todoListController.sortTasks));
+
 app.post('/', todoListController.createTask);
 app.delete('/:id', checkParams, rescue(todoListController.deleteTask));
 app.put('/:id', checkParams, rescue(todoListController.updateTask));

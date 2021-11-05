@@ -5,6 +5,12 @@ const getTasks = async (_req, res) => {
   res.status(200).json(tasks);
 };
 
+const sortTasks = async (req, res) => {
+  const { sortBy, sortOrder } = req.body;
+  const tasks = await todoListService.sortTasks(sortBy, sortOrder);
+  res.status(200).json(tasks);
+};
+
 const createTask = async (req, res) => {
   const { task, status } = req.body;
   await todoListService.createTask(task, status);
@@ -24,6 +30,7 @@ const updateTask = async (req, res) => {
 
 module.exports = {
   getTasks,
+  sortTasks,
   createTask,
   deleteTask,
   updateTask,
