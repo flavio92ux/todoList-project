@@ -23,7 +23,6 @@ export const IdProvider = ({ children }) => {
     setEditMode,
   };
 
-
   return (
     <idContext.Provider value={ allParameters }>
       { children }

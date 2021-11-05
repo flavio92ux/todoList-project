@@ -6,13 +6,16 @@ function ListTasks() {
   const [background, setBackground] = useState({ id: '', color: '' });
   const [status, setStatus] = useState({ id: '', status: '' });
 
-  const { id, editMode, changed, tasks, setId, setDisable, setEditMode, setTasks } = useId();
+  const {
+    id,
+    editMode,
+    changed, setChanged, tasks, setId, setDisable, setEditMode, setTasks } = useId();
 
   useEffect(() => {
     fetch('http://localhost:3001/')
       .then((response) => response.json())
       .then((data) => setTasks(data));
-  }, [id, changed]);
+  }, [changed]);
 
   useEffect(() => {
     setBackground({ id, color: 'grey' });
@@ -22,6 +25,10 @@ function ListTasks() {
     setId(listId);
     setDisable(false);
   };
+
+  useEffect(() => {
+    setChanged(!changed);
+  }, [status]);
 
   const handleDropdown = ({ textContent }, listId) => {
     const validNames = ['Pending', 'In Progress', 'Done'];

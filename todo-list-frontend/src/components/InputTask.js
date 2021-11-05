@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import { useId } from '../providers/listProvider';
 
 function InputTask() {
   const [inputContent, setInputContent] = useState('');
+  const { changed, setChanged } = useId();
 
   const handleTask = () => {
     const requestOptions = {
@@ -15,6 +17,7 @@ function InputTask() {
       .then((response) => response.json());
 
     setInputContent('');
+    setChanged(!changed);
     document.getElementById('input').focus();
   };
 

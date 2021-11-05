@@ -3,7 +3,10 @@ import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
 function ManipulationButtons() {
-  const { id, setId, disable, editMode, setEditMode, setTasks } = useId();
+  const {
+    id,
+    setId,
+    disable, editMode, setEditMode, tasks, setTasks, changed, setChanged } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -12,6 +15,8 @@ function ManipulationButtons() {
 
     fetch(`http://localhost:3001/${id}`, requestOptions)
       .then(() => setId(null));
+
+    setChanged(!changed);
   };
 
   const handleEdit = () => {
@@ -30,6 +35,7 @@ function ManipulationButtons() {
 
   const handleDone = () => {
     setEditMode({ ...editMode, edit: false });
+    setChanged(!changed);
     saveDb();
   };
 
@@ -49,8 +55,6 @@ function ManipulationButtons() {
     if (!validValues.includes(textContent)) return;
 
     const query = generateQuery(textContent);
-
-    console.log(query);
 
     fetch(query)
       .then((response) => response.json())
