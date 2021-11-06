@@ -83,8 +83,6 @@ function ManipulationButtons() {
       >
         Edit Task
       </Button>
-      { editMode.edit
-        && <Button onClick={ handleDone }>Ok</Button> }
       <DropdownButton
         id="dropdown-item-button"
         className="drop-button"
@@ -95,6 +93,8 @@ function ManipulationButtons() {
           <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
         ))}
       </DropdownButton>
+      { editMode.edit
+        && <Button onClick={ handleDone }>Ok</Button> }
     </div>
   );
 }
