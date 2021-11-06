@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./tests/**/*$NAME*.test.js --exit",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -22,6 +22,10 @@
     "rescue": "^6.0.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.14"
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3",
+    "mongodb-memory-server": "^6.9.6",
+    "nodemon": "^2.0.14",
+    "sinon": "^12.0.1"
   }
 }
