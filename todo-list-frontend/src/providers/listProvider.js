@@ -5,7 +5,8 @@ export const idContext = React.createContext('');
 
 export const IdProvider = ({ children }) => {
   const [id, setId] = useState();
-  const [changed, setChanged] = useState(false);
+  const [query, setQuery] = useState('');
+  const [changed, setChanged] = useState();
   const [tasks, setTasks] = useState([]);
   const [disable, setDisable] = useState(true);
   const [editMode, setEditMode] = useState({ id: '', edit: false, input: '' });
@@ -21,6 +22,8 @@ export const IdProvider = ({ children }) => {
     setDisable,
     editMode,
     setEditMode,
+    query,
+    setQuery,
   };
 
   return (

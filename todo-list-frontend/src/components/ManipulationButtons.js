@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useId } from '../providers/listProvider';
 
@@ -6,7 +6,11 @@ function ManipulationButtons() {
   const {
     id,
     setId,
-    disable, editMode, setEditMode, setTasks, changed, setChanged } = useId();
+    disable,
+    setDisable,
+    query,
+    setQuery,
+    editMode, setEditMode, setTasks, changed, setChanged } = useId();
 
   const handleDelete = () => {
     const requestOptions = {
@@ -16,6 +20,7 @@ function ManipulationButtons() {
     fetch(`http://localhost:3001/${id}`, requestOptions)
       .then(() => setId(null));
 
+    setDisable(true);
     setChanged(!changed);
   };
 
@@ -50,15 +55,19 @@ function ManipulationButtons() {
     }
   };
 
+  useEffect(() => {
+    if (query) {
+      fetch(`http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`)
+        .then((response) => response.json())
+        .then((data) => setTasks(data));
+    }
+  }, [query]);
+
   const handleSort = ({ textContent }) => {
     const validValues = ['Date', 'Task', 'Status'];
     if (!validValues.includes(textContent)) return;
 
-    const query = generateQuery(textContent);
-
-    fetch(`http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`)
-      .then((response) => response.json())
-      .then((data) => setTasks(data));
+    setQuery(generateQuery(textContent));
   };
 
   return (
@@ -78,8 +87,6 @@ function ManipulationButtons() {
       >
         Edit Task
       </Button>
-      { editMode.edit
-        && <Button onClick={ handleDone }>Ok</Button> }
       <DropdownButton
         id="dropdown-item-button"
         className="drop-button"
@@ -90,6 +97,8 @@ function ManipulationButtons() {
           <Dropdown.Item key={ item }>{ item }</Dropdown.Item>
         ))}
       </DropdownButton>
+      { editMode.edit
+        && <Button onClick={ handleDone }>Ok</Button> }
     </div>
   );
 }

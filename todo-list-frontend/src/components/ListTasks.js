@@ -5,6 +5,7 @@ import { useId } from '../providers/listProvider';
 function ListTasks() {
   const [background, setBackground] = useState({ id: '', color: '' });
   const [status, setStatus] = useState({ id: '', status: '' });
+  const { query } = useId();
 
   const {
     id,
@@ -12,7 +13,11 @@ function ListTasks() {
     changed, setChanged, tasks, setId, setDisable, setEditMode, setTasks } = useId();
 
   useEffect(() => {
-    fetch('http://localhost:3001/')
+    const URL = query.includes(['task', 'status', 'createdAt'])
+      ? `http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`
+      : 'http://localhost:3001/';
+
+    fetch(URL)
       .then((response) => response.json())
       .then((data) => setTasks(data));
   }, [changed]);
@@ -49,7 +54,7 @@ function ListTasks() {
       body: JSON.stringify({ status: status.status }),
     };
 
-    fetch(`http://localhost:3001/${status.id}`, requestOptions);
+    if (status.id) fetch(`http://localhost:3001/${status.id}`, requestOptions);
   }, [status]);
 
   return (
