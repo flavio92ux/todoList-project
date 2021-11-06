@@ -13,7 +13,7 @@ function ListTasks() {
     changed, setChanged, tasks, setId, setDisable, setEditMode, setTasks } = useId();
 
   useEffect(() => {
-    const URL = query
+    const URL = query.includes(['task', 'status', 'createdAt'])
       ? `http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`
       : 'http://localhost:3001/';
 
@@ -54,7 +54,7 @@ function ListTasks() {
       body: JSON.stringify({ status: status.status }),
     };
 
-    fetch(`http://localhost:3001/${status.id}`, requestOptions);
+    if (status.id) fetch(`http://localhost:3001/${status.id}`, requestOptions);
   }, [status]);
 
   return (

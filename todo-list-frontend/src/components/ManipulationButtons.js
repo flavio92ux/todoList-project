@@ -56,9 +56,11 @@ function ManipulationButtons() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`)
-      .then((response) => response.json())
-      .then((data) => setTasks(data));
+    if (query) {
+      fetch(`http://localhost:3001/sort?sortBy=${query}&sortOrder=asc`)
+        .then((response) => response.json())
+        .then((data) => setTasks(data));
+    }
   }, [query]);
 
   const handleSort = ({ textContent }) => {

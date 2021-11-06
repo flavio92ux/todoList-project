@@ -13,8 +13,7 @@ function InputTask() {
       body: JSON.stringify({ task: inputContent }),
     };
 
-    fetch('http://localhost:3001/', requestOptions)
-      .then((response) => response.json());
+    fetch('http://localhost:3001/', requestOptions);
 
     setInputContent('');
     setChanged(!changed);
