@@ -7,6 +7,7 @@ function ManipulationButtons() {
     id,
     setId,
     disable,
+    setDisable,
     query,
     setQuery,
     editMode, setEditMode, setTasks, changed, setChanged } = useId();
@@ -19,6 +20,7 @@ function ManipulationButtons() {
     fetch(`http://localhost:3001/${id}`, requestOptions)
       .then(() => setId(null));
 
+    setDisable(true);
     setChanged(!changed);
   };
 
