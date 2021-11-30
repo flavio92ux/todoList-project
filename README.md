@@ -1,4 +1,4 @@
-# todoList-project
+# Projeto To Do List
 
 Projeto todoList no qual utilizamos conhecimentos de React e banco de dados não relacional mongodb. Estilização com bootstrap <br>
 
